@@ -13,7 +13,7 @@
 								<!-- Avatar -->
 							<div class="card-content is-horizontal-center is-flex">
 								<figure class="image is-128x128">
-										
+									<%= image_tag 'icon_default_avatar.png' %>
 								</figure>
 							</div>
 							
@@ -22,7 +22,7 @@
 									<!-- Upload Button -->
 								<div class="content has-text-centered">
 									<p class="title is-5">
-											
+										<%= current_user.full_name %>
 									</p>
 									<button class="button is-primary is-outlined is-fullwidth">Upload Avatar</button>
 								</div>
@@ -32,7 +32,7 @@
 								<article class="media">
 									<div class="media-content">Member since</div>
 									<div class="media-right">
-											<strong> </strong>
+										<strong> <%= current_user.created_at.strftime('%b %Y') %></strong>
 									</div>
 								</article>
 								<hr class="h-10">
@@ -47,7 +47,13 @@
 									</div>
 
 									<div class="content">
-											
+										<%= form_for :user, url: users_edit_path, method: 'post', html: { id: 'user-from', class: 'is-hidden'} do |f| %>
+											<div class="field">
+												<%= f.text_field :from, autofocus: true, autocomplete: 'form', class: 'input' %>
+											</div>
+											<a class="toggle button is-light" aria-controls="user-from"> Cancel</a>
+											<%= f.submit 'Save', class: 'button is-danger' %>
+										<% end %>
 									</div>
 
 								</article>                                
@@ -58,12 +64,18 @@
 									<div class="media">
 										<div class="media-content">Online Status</div>
 										<div class="media-right">
-											<strong> </strong> <i class="toggle far fa-edit" aria-controls="user-status"></i>
+											<strong><%= current_user.status ? 'Online' : 'Offline' %> </strong> <i class="toggle far fa-edit" aria-controls="user-status"></i>
 										</div>
 									</div>
 
 									<div class="content">
-											
+										<%= form_for :user, url: users_edit_path, method: 'post', html: { id: 'user-status', class: 'is-hidden'} do |f| %>
+											<div class="field">
+												<%= f.select :status, options_for_select([['Online', 'true'], ['Offline', 'false']]), {}, class: 'select is-fullwidth' %>
+											</div>
+											<a class="toggle button is-light" aria-controls="user-status"> Cancel</a>
+											<%= f.submit 'Save', class: 'button is-danger' %>
+										<% end %>
 									</div>
 								</article>
 
@@ -92,7 +104,13 @@
 									</div>
 
 									<div class="content">
-											
+                    <%= form_for :user, url: users_edit_path, method: 'post', html: { id: 'user-about', class: 'is-hidden'} do |f| %>
+											<div class="field">
+												<%= f.text_area :about, autofocus: true, autocomplete: 'form', class: 'input' %>
+											</div>
+											<a class="toggle button is-light" aria-controls="user-about"> Cancel</a>
+											<%= f.submit 'Save', class: 'button is-danger' %>
+										<% end %>
 									</div>
 								</article>
 								<hr class="h-10">
@@ -113,7 +131,13 @@
 										</div>
 
 										<div class="content">
-												
+                      <%= form_for :user, url: users_edit_path, method: 'post', html: { id: 'user-language', class: 'is-hidden'} do |f| %>
+                        <div class="field">
+                          <%= f.text_field :language, autofocus: true, autocomplete: 'form', class: 'input' %>
+                        </div>
+                        <a class="toggle button is-light" aria-controls="user-language"> Cancel</a>
+                        <%= f.submit 'Save', class: 'button is-danger' %>
+										  <% end %>
 										</div>
 
 								</article>
