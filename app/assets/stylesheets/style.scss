@@ -38,3 +38,7 @@ $sides: (top, bottom, left, right);
   font-size: 13px;
   font-weight: 600;
 }
+
+.has-shadow {
+  z-index: 5;
+}
