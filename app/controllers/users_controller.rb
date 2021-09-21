@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   def dashboard
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   def update
     if current_user.update(current_user_params)
       flash[:notice] = 'Record successfully updated!'
