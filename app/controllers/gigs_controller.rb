@@ -29,12 +29,69 @@ class GigsController < ApplicationController
   end
 
   def update
+    raise
+    @step = params[:step].to_i
+
+    if @step == 1 && (gig_params[:title].blank? || gig_params[:category_id].blank?)
+      redirect_to request.referrer, flash: {error: "You must select Title and Category to proceed"}
+    end
+
+    if @step == 2
+      gig_params[:pricings_attributes].each do |index, pricing|
+        if pricing[:pricing_type] != "basic"
+          next
+        else 
+          if pricing[:title].blank? || pricing[:description].blank? || pricing[:delivery_time].blank? || pricing[:price].blank?
+            redirect_to request.referrer, flash: {error: "Invalid pricing, please enter all fields correctly"}
+          end
+        end
+      end
+    end
+
+    if @step == 3 && gig_params[:description].blank?
+      redirect_to request.referrer, flash: {error: "Description can't be blank"}
+    end
+
+    if @step == 4 && @gig.photos.blank?
+      redirect_to request.referrer, flash: {error: "You do not have photos attached"}
+    end
+
+    if @step == 5 
+      @gig.pricings.each do |pricing|
+        if @gig.has_single_price && pricing != Pricing.pricing_types[:basic]
+          next
+        else
+          if pricing.title.blank? || pricing.description.blank? || pricing.delivery_time.blank? || pricing.price.blank?
+            redirect_to edit_gig_path(@gig, step: 2), flash: {error: "Invalid pricing, please enter all fields correctly"}
+          end
+        end
+      end
+
+      if @gig.description.blank?
+        redirect_to edit_gig_path(@gig, step: 3), flash: {error: "Description can't be blank"}
+      end
+
+      if @gig.photos.blank?
+        redirect_to edit_gig_path(@gig, step: 4), flash: {error: "You do not have photos attached"}
+      end
+
+      if @gig.update(gig_params)
+        flash[:notice] = "Saved succesfully"
+      else
+        redirect_to request.referrer, flash: {error: @gig.errors.full_messages}
+      end
+    end
+
   end
 
   private
 
   def set_gig
     @gig = Gig.find(params[:id])
+  end
+
+  def set_step
+
   end
 
   def gig_params

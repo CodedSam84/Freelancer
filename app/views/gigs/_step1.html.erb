@@ -7,4 +7,9 @@
     <label class="label">Category</label>
     <%= f.select :category_id, options_for_select(@categories.map { |c| [c.name, c.id] }, @gig.category_id) %>
   </div>
+  <div class="field">
+    <label class="checkbox">
+      <%= f.check_box :has_single_price, class: "checkbox" %>Has Single Price
+    </label> 
+  </div>
 </div>
