@@ -3,6 +3,7 @@ class GigsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_gig, except: [:new, :create]
   before_action :is_authorised, only: [:edit, :update]
+  before_action :set_step, only: [:edit, :update]
 
   def new
     @gig = current_user.gigs.build
@@ -14,7 +15,7 @@ class GigsController < ApplicationController
 
     if @gig.save
       @gig.pricings.create(Pricing.pricing_types.values.map {|x| { pricing_type: x} })
-      redirect_to edit_gig_path(@gig), notice: "Saved..."
+      redirect_to edit_gig_path(@gig, step: 1), notice: "Saved..."
     else
       redirect_to request.referrer, flash: {error: @gig.errors.full_messages}
     end
@@ -25,15 +26,11 @@ class GigsController < ApplicationController
 
   def edit
     @categories = Category.all
-    @step = params[:step].to_i
   end
 
   def update
-    raise
-    @step = params[:step].to_i
-
     if @step == 1 && (gig_params[:title].blank? || gig_params[:category_id].blank?)
-      redirect_to request.referrer, flash: {error: "You must select Title and Category to proceed"}
+      return redirect_to request.referrer, flash: {error: "You must select Title and Category to proceed"}
     end
 
     if @step == 2
@@ -42,18 +39,18 @@ class GigsController < ApplicationController
           next
         else 
           if pricing[:title].blank? || pricing[:description].blank? || pricing[:delivery_time].blank? || pricing[:price].blank?
-            redirect_to request.referrer, flash: {error: "Invalid pricing, please enter all fields correctly"}
+            return redirect_to request.referrer, flash: {error: "Invalid pricing, please enter all fields correctly"}
           end
         end
       end
     end
 
     if @step == 3 && gig_params[:description].blank?
-      redirect_to request.referrer, flash: {error: "Description can't be blank"}
+      return redirect_to request.referrer, flash: {error: "Description can't be blank"}
     end
 
     if @step == 4 && @gig.photos.blank?
-      redirect_to request.referrer, flash: {error: "You do not have photos attached"}
+      return redirect_to request.referrer, flash: {error: "You do not have photos attached"}
     end
 
     if @step == 5 
@@ -62,24 +59,30 @@ class GigsController < ApplicationController
           next
         else
           if pricing.title.blank? || pricing.description.blank? || pricing.delivery_time.blank? || pricing.price.blank?
-            redirect_to edit_gig_path(@gig, step: 2), flash: {error: "Invalid pricing, please enter all fields correctly"}
+            return redirect_to edit_gig_path(@gig, step: 2), flash: {error: "Invalid pricing, please enter all fields correctly"}
           end
         end
       end
 
       if @gig.description.blank?
-        redirect_to edit_gig_path(@gig, step: 3), flash: {error: "Description can't be blank"}
+        return redirect_to edit_gig_path(@gig, step: 3), flash: {error: "Description can't be blank"}
       end
 
       if @gig.photos.blank?
-        redirect_to edit_gig_path(@gig, step: 4), flash: {error: "You do not have photos attached"}
+        return redirect_to edit_gig_path(@gig, step: 4), flash: {error: "You do not have photos attached"}
       end
+    end
 
-      if @gig.update(gig_params)
-        flash[:notice] = "Saved succesfully"
-      else
-        redirect_to request.referrer, flash: {error: @gig.errors.full_messages}
-      end
+    if @gig.update(gig_params)
+      flash[:notice] = "Saved succesfully"
+    else
+      return redirect_to request.referrer, flash: {error: @gig.errors.full_messages}
+    end
+
+    if @step < 5
+      redirect_to edit_gig_path(@gig, step: @step + 1)
+    else
+      redirect_to dashboard_path
     end
 
   end
@@ -91,16 +94,19 @@ class GigsController < ApplicationController
   end
 
   def set_step
-
+    @step = params[:step].to_i > 0 ? params[:step].to_i : 1
+    if @step > 5
+      @step = 5
+    end
   end
 
   def gig_params
-    params.require(:gig).permit(:title, :video, :active, :has_single_price, :category_id,
+    params.require(:gig).permit(:title, :video, :active, :has_single_price, :description, :category_id,
                                 pricings_attributes: [:title, 
                                                       :description, 
                                                       :delivery_time, 
                                                       :price, 
-                                                      :pricing_type, 
+                                                      :pricing_type,
                                                       :id])
   end
 
