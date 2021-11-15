@@ -13,6 +13,7 @@ Turbolinks.start()
 ActiveStorage.start()
 
 window.Noty = require('noty');
+const { Dropzone } = require('dropzone');
 
 $(() => {
 	$('.toggle').on('click', (e) => {

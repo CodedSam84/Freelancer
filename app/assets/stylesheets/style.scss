@@ -40,5 +40,24 @@ $sides: (top, bottom, left, right);
 }
 
 .has-shadow {
-  z-index: 5;
+  z-index: 5 !important;
 }
+
+.dropzone {
+  border: 2px dashed #0087f7 !important;
+  border-radius: 5px;
+  background: white;
+}
+
+.dropzone .dz-message {
+  font-weight: bold;
+  color: #0D1536;
+}
+
+.dropzone .dz-message .note {
+  font-size: .8em;
+  font-weight: 200;
+  display: block;
+  margin-top: 1.4rem;
+}
+
