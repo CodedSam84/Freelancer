@@ -15,15 +15,13 @@ ActiveStorage.start()
 window.Noty = require('noty');
 const { Dropzone } = require('dropzone');
 
-$(() => {
+$(document).on('turbolinks:load', () => {
 	$('.toggle').on('click', (e) => {
 		e.stopPropagation();
 		e.preventDefault();
 		$('#' + e.target.getAttribute('aria-controls')).toggleClass('is-hidden');
 	})
 })
-
-
 
 require("trix")
 require("@rails/actiontext")
