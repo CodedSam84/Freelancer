@@ -23,6 +23,7 @@ class GigsController < ApplicationController
   end
 
   def show
+    @categories = Category.all
   end
 
   def edit
