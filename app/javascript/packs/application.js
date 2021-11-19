@@ -14,6 +14,8 @@ ActiveStorage.start()
 
 window.Noty = require('noty');
 const { Dropzone } = require('dropzone');
+window.bulmaCarousel = require('bulma-extensions/bulma-carousel/dist/js/bulma-carousel');
+
 
 $(document).on('turbolinks:load', () => {
 	$('.toggle').on('click', (e) => {

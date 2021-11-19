@@ -17,21 +17,21 @@
                 <hr>
                 <div class="hero-carousel" id="carousel-photo">
                   <% @gig.photos.each do |p| %>
-                    <div class="carousel-item has-background image is-16by9">
-                      <%= image_tag(url_for(p)) %>
-                    </div>
+                  <div class="carousel-item has-background image is-16by9">
+                    <%= image_tag url_for(p), class: "is-background", width: "100%" %>
+                  </div>
                   <% end %>
-                  
+              
                   <% if @gig.video.present? %>
-                    <div class="video-container">
-                     <iframe src="https://www.youtube.com/embed/<%= @gig.video %>" allowfullscreen></iframe>
+                    <div class="video-container carousel-item">
+                      <iframe src="https://www.youtube.com/embed/<%= @gig.video %>" allowfullscreen></iframe>
                     </div>
                   <% end %>
                 </div>
               </div>
             </div>
           </div>
-
+  
           <!-- About Section -->
           <div class="column">
             <div class="card">
@@ -135,4 +135,11 @@
     </div>
   </div>
 </section>
+
+<script>
+  bulmaCarousel.attach('#carousel-photo', {
+    slidesToScroll: 1,
+    slidesToShow: 1
+  });
+</script>
 
