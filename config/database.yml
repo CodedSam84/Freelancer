@@ -22,7 +22,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   username: railsuser
-  password: rails
+  password: Rails.application.credentials.dig(:postgres_password)
 
 development:
   <<: *default
