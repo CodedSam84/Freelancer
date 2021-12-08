@@ -11,11 +11,11 @@
 
 # Category.destroy_all
 
-# puts "Creating 10 categories..."
+puts "Creating 10 categories..."
 
-# 10.times do
-#   Category.create(name: Faker::Job.unique.field)
-# end
+10.times do
+  Category.create(name: Faker::Job.unique.field)
+end
 
 puts "Creating 8 users..."
 
