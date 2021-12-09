@@ -19,6 +19,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'faker', '~> 2.19'
 gem 'image_processing', '~> 1.12', '>= 1.12.1'
 gem 'image_magick', '~> 0.1.9'
+gem "aws-sdk-s3", require: false
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
