@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       post 'upload_photo'
       delete 'delete_photo'
     end
+
+    resources :orders, only: [:create]
   end
 
   get '/dashboard', to: 'users#dashboard'

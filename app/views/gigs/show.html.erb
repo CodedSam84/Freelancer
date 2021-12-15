@@ -88,8 +88,11 @@
                           <strong><i class="far fa-clock"></i> <%= pluralize(p.delivery_time, "Day") %> Delivery</strong>                                                    
                         </p>
                       </div>
-                      <% unless user_signed_in? && @gig.active || user_signed_in? && @gig.active && @gig.user_id != current_user.id %>
-                        <button class="button is-fullwidth is-danger">Continue ($<%= p.price %>)</button>
+                      <% if (!user_signed_in? && @gig.active) || (user_signed_in? && @gig.active && @gig.user_id != current_user.id) %>
+                        <%= form_for([@gig, @gig.orders.build]) do |f| %>
+                          <%= hidden_field_tag "pricing_type", p.pricing_type %>
+                          <%= f.submit "Continue ($#{p.price})",  class:"button is-fullwidth is-danger" %>
+                        <% end %>
                       <% else %>
                         <button class="button is-fullwidth is-danger" disabled >Continue ($<%= p.price %>)</button>
                       <% end %>
