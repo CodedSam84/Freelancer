@@ -15,12 +15,34 @@ class OrdersController < ApplicationController
     redirect_to request.referrer
   end
 
+  def selling_orders
+    @orders = current_user.selling_orders
+  end
+
+  def buying_orders
+    @orders = current_user.buying_orders
+  end
+
+    def complete
+      order = Order.find(params[:id])
+
+      if order.inprogress?
+        if order.completed!
+          flash[:notice] = "Saved..."
+        else
+          flash[:alert] = "Something went wrong..."
+        end
+
+        redirect_to request.referrer
+      end
+    end
+    
   private
 
   def charge(gig, pricing)
     order = gig.orders.build
     order.due_date = Date.today + pricing.delivery_time
-    order.title = pricing.title
+    order.title = gig.title
     order.amount = pricing.price
     order.seller_name = gig.user.full_name
     order.buyer_name = current_user.full_name

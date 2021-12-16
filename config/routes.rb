@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root to: "pages#home"
 
+  get '/selling_orders', to: 'orders#selling_orders'
+  get '/buying_orders', to: 'orders#buying_orders'
+
+  put '/orders/:id/complete', to: 'orders#complete', as: 'complete_order'
+
   resources :gigs do
     member do
       post 'upload_photo'
