@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
     order.buyer_id = current_user.id
 
     if order.save
-      flash[:alert] = "Order saved successfully"
+      flash[:notice] = "Order saved successfully"
     else
       flash[:alert] = order.errors.full_messages.join(", ")
     end
