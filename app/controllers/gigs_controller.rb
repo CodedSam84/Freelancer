@@ -1,5 +1,5 @@
 class GigsController < ApplicationController
-
+  
   protect_from_forgery except: [:upload_photo]
   before_action :authenticate_user!, except: [:show]
   before_action :set_gig, except: [:new, :create]

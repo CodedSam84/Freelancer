@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   root to: "pages#home"
 
   get '/selling_orders', to: 'orders#selling_orders'
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
 
     resources :orders, only: [:create]
   end
+
+  resources :requests
 
   get '/dashboard', to: 'users#dashboard'
   get 'users/:id', to: 'users#show'
