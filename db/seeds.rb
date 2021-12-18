@@ -11,21 +11,36 @@
 
 # Category.destroy_all
 
-puts "Creating 10 categories..."
+# puts "Creating 10 categories..."
+
+# 10.times do
+#   Category.create(name: Faker::Job.unique.field)
+# end
+
+# puts "Creating 8 users..."
+
+# 8.times do 
+#   User.create(email: Faker::Internet.free_email,
+#               full_name: Faker::Name.unique.name,
+#               about: Faker::Quote.unique.matz,
+#               from: Faker::Address.country,
+#               language: Faker::Nation.language,
+#               image: "https://i.pravatar.cc/300",
+#               password: "123456"
+#               )
+# end
+
+# Create dummy Requests
 
 10.times do
-  Category.create(name: Faker::Job.unique.field)
-end
-
-puts "Creating 8 users..."
-
-8.times do 
-  User.create(email: Faker::Internet.free_email,
-              full_name: Faker::Name.unique.name,
-              about: Faker::Quote.unique.matz,
-              from: Faker::Address.country,
-              language: Faker::Nation.language,
-              image: "https://i.pravatar.cc/300",
-              password: "123456"
-              )
+  random_user = User.all.sample
+  category = Category.all.sample
+  request = Request.create(
+      title: Faker::Job.title,
+      description: Faker::Quote.matz,
+      budget: Faker::Number.between(from: 5, to: 50),
+      delivery: Faker::Number.between(from: 1, to: 10),
+      user_id: random_user.id,
+      category_id: category.id
+  )
 end

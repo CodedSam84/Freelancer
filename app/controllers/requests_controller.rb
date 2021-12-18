@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:new, :edit, :list]
   before_action :is_authorised, only: [:edit, :update, :destroy]
@@ -43,6 +43,13 @@ class RequestsController < ApplicationController
   end
 
   def list
+    @category = params[:category]
+    
+    unless @category.blank?
+      @requests = Request.where(category_id: @category)
+    else
+      @requests = Request.all
+    end
   end
 end
 

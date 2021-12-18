@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   put '/orders/:id/complete', to: 'orders#complete', as: 'complete_order'
 
+  get '/all_requests', to: 'requests#list'
+
   resources :gigs do
     member do
       post 'upload_photo'

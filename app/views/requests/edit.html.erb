@@ -43,7 +43,7 @@
 
         <% if @request.file.attached? %>
           <%= link_to url_for(@request.file), class: "tag small is-warning m-t-20",
-                                              download: ""  do %>
+                                              download: "Attachement-#{@request.file.id}" do %>
             <i class="fas fa-paperclip fa-lg p-r-5"></i><%= @request.file.filename %>
           <% end %>
         <% end %>
