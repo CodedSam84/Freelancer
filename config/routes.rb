@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'users#show'
 
   post '/users/edit', to: 'users#update'
+  post '/offers', to: 'offers#create'
 
   devise_for :users,
               path: '', 
