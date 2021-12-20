@@ -1,9 +1,9 @@
 class RequestsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_request, only: [:show, :edit, :update, :destroy, :offers]
   before_action :set_categories, only: [:new, :edit, :list]
-  before_action :is_authorised, only: [:edit, :update, :destroy]
+  before_action :is_authorised, only: [:edit, :update, :destroy, :offers]
 
   def index
     @requests = current_user.requests
@@ -52,6 +52,10 @@ class RequestsController < ApplicationController
       @requests = Request.all
     end
   end
+
+  def offers
+    @offers = @request.offers
+  end
 end
 
 private
@@ -69,5 +73,5 @@ def request_params
 end
 
 def is_authorised
-  redirect_to root_path, alert: "You don't have permission..." unless current_user.id = @request.user_id
+  redirect_to root_path, alert: "You don't have permission..." unless current_user.id == @request.user_id
 end

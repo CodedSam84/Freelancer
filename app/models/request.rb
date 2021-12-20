@@ -3,6 +3,7 @@ class Request < ApplicationRecord
   belongs_to :category
 
   has_many :offers, dependent: :destroy
+  has_many :orders
   has_one_attached :file
 
   validates :title, presence: {message: "Title can't be blank"}
