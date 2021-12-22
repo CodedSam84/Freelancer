@@ -24,23 +24,120 @@
       <% else %>
         <% @orders.each do |o| %>
           <tr>
-            <td><%= o.created_at.strftime('%d %b %Y') %></td>
+            <td><%= o.created_at.strftime('%d, %b %Y') %></td>
             <td><%= o.seller_name %></td>
             <td>
               <%= link_to o.title , gig_path(o.gig) unless o.gig.nil? %>
               <%= link_to o.title , request_path(o.request) unless o.request.nil? %>
             </td>
-            <td><%= o.due_date.strftime('%d %b %Y') %></td>
+            <td><%= o.due_date.strftime('%d, %b %Y') %></td>
             <td><%= o.amount %></td>
             <td>
               <span class="tag <%= 'is-warning' if o.inprogress? %> <%= 'is-success' if o.completed? %>">
               <%= o.status.capitalize %>
               </span>
             </td>
-            <td><%= link_to "Mark as Completed", complete_order_path(o), method: :put, class: "button is-small is-primary #{'is-hidden' if o.completed?}" %></td>
+            <td>
+              <% unless o.completed? %>
+                <%= link_to "Mark as Completed", complete_order_path(o), method: :put, class: "button is-small is-primary #{'is-hidden' if o.completed?}" %>
+              <% else %>
+                <a class="button is-small is-outlined is-danger toggle-modal" aria-control="<%= o.id %>">Rating</a>
+                <div class="svg-star-rating"></div>
+                <div class="modal" id="<%= o.id %>">
+                  <div class="modal-background"></div>
+                  <div class="modal-content">
+                    <div class="box">
+                      <%= form_for Review.new do |f| %>
+                        <%= f.hidden_field :order_id, value: o.id %>
+                        <div class="field">
+                          <div id="star_<%= o.id %>"></div>
+                        </div>
+
+                        <div class="field">
+                          <%= f.number_field :stars, class: "input", style: "display:none;", id: "star_input_#{o.id}" %>
+                          
+                        </div>
+
+                        <div class="field">
+                          <%= f.text_area :review, class: "textarea" %>
+                        </div>
+
+                        <a class="button toggle-modal is-light" aria-control="<%= o.id %>">Cancel</a>
+                        <%= f.submit "Add Review", class: "button is-danger" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
 </section>
+
+<script>
+  // $('.toggle-modal').on('click', (e) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+
+  //   var order_id = e.target.getAttribute('aria-control');
+
+  //   $('#star_' + order_id).raty = {
+  //     path: '/assets',
+  //     scoreName: 'review[:stars]',
+  //     score: 1
+  //   };
+
+  //   $('#' + order_id).toggleClass('is-active')
+  // })
+</script>
+
+<script>
+  $(document).on('turbolinks:load', () => {
+
+    $('.toggle-modal').on('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    var order_id = e.target.getAttribute('aria-control');
+
+    $('#star_' + order_id).starRating({
+ 
+    totalStars: 5,
+    emptyColor: 'lightgray',
+    hoverColor: 'orange',
+    activeColor: 'orange',
+    initialRating: 1,
+    starSize: 20,
+    disableAfterRate: false,
+    ratedColor: 'orange',
+    useFullStars: true,
+    strokeWidth: 0,
+    useGradient: false,
+    callback: function(currentRating){
+      var ratingField = $('#star_input_' + order_id);
+      ratingField.val( currentRating);
+      console.log(ratingField);
+    }
+ 
+    })
+
+    $('#' + order_id).toggleClass('is-active')
+  })
+  })
+</script>
+
+<script>
+  // $(".svg-star-rating").starRating({
+ 
+  //   initialRating: 3,
+ 
+  //   starSize: 30
+ 
+  // });
+</script>
+
+
+

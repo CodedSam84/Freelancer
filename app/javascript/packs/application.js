@@ -11,6 +11,8 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+//require('packs/raty')
+require('packs/star-rating-svg')
 
 window.Noty = require('noty');
 const { Dropzone } = require('dropzone');
