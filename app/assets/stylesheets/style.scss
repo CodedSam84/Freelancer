@@ -110,3 +110,16 @@ $sides: (top, bottom, left, right);
   -webkit-filter: drop-shadow( -2px -2px 2px #888 );
   filter: drop-shadow( -2px -2px 2px #888 );
 }
+
+.card-width-flex {
+  flex-basis: 30%;
+  margin: 5px;
+}
+
+.pagination-link.is-current {
+  background-color: #00d1b2 !important;
+}
+
+.pagination-link.is-current {
+  border-color: #00d1b2 !important;
+}
