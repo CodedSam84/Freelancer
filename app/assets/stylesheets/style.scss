@@ -126,3 +126,8 @@ $sides: (top, bottom, left, right);
 .pagination-link.is-current {
   border-color: #00d1b2 !important;
 }
+
+.has-bg-img {
+  background: url('background.jpg') center center;
+  background-size: cover;
+}

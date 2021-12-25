@@ -13,23 +13,25 @@
 
 	<div id="navbarBasicExample" class="navbar-menu">
 		<div class="navbar-start">
-			<div class="navbar-item">
-				<div class="field has-addons">
-					<div class="control">
-						<input class="input" type="text" placeholder="Find Services">
+			<div class="navbar-item <%= "is-hidden" if current_page?(root_path)%>">
+				<%= form_tag search_path, method: :get, class: "field has-addons" do %>
+					<div class="control has-icons-left">
+						<span class="icon is-small is-left">
+							<i class="fa fa-search"></i>
+						</span>
+						<%= text_field_tag 'q', '', class: "input", placeholder: "Find Services" %>
 					</div>
 					<div class="control">
-						<a class="button is-info">
-						Search
-						</a>
+						<button class="button is-danger type="submit">Search</button>
 					</div>
-				</div>
+        <% end %>
 			</div>
 		</div>
 
 		<div class="navbar-end">
 			<%= link_to "Post Gig", new_gig_path, class: "navbar-item" %>
-			<a class="navbar-item">Browse Gigs</a>
+			<%= link_to "Browse Gigs", search_path, class: "navbar-item" %>
+
 			<% unless user_signed_in? %>
 				<div class="navbar-item">
 					<div class="buttons">

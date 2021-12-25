@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :requests
 
   get '/dashboard', to: 'users#dashboard'
-  get 'users/:id', to: 'users#show'
+  get 'users/:id', to: 'users#show', as: 'user'
   get '/request_offers/:id', to: 'requests#offers', as: 'request_offers'
   get '/my_offers', to: 'offers#my_offers', as: 'my_offers'
   get '/search', to: 'pages#search', as: 'search'
