@@ -128,6 +128,6 @@ $sides: (top, bottom, left, right);
 }
 
 .has-bg-img {
-  background: url('images/background.jpg') center center;
+  background: image-url('background.jpg') center center;
   background-size: cover;
 }
