@@ -46,7 +46,7 @@
 # end
 
 
-10.times do
+20.times do
   random_user = User.all.sample
   category = Category.all.sample
   gig = Gig.create(
