@@ -114,6 +114,9 @@ $sides: (top, bottom, left, right);
 .card-width-flex {
   flex-basis: 30%;
   margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .pagination-link.is-current {
