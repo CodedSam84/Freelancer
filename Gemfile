@@ -21,6 +21,8 @@ gem 'image_processing', '~> 1.12', '>= 1.12.1'
 gem 'image_magick', '~> 0.1.9'
 gem "aws-sdk-s3", require: false
 gem 'kaminari', '~> 1.2', '>= 1.2.2'
+gem 'stripe', '~> 5.42'
+gem 'pay', '~> 3.0'
 
 
 group :development, :test do
