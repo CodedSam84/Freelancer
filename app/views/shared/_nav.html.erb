@@ -43,10 +43,10 @@
 				<div class="navbar-item has-dropdown is-hoverable">
 					
 					<a class="navbar-item">
-					<figure class="image is-25x25 m-r-5">
-						<%= image_tag avatar_url(current_user), class: "is-rounded" %>
-					</figure>
-					<%= current_user.full_name %>
+						<figure class="image is-25x25 m-r-5" id="mobile-nav">
+							<%= image_tag avatar_url(current_user), class: "is-rounded" %>
+						</figure>
+						<%= current_user.full_name %>
 					</a>
 
 					<div class="navbar-dropdown">
@@ -115,7 +115,9 @@
 		// Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
 		$(".navbar-burger").toggleClass("is-active");
 		$(".navbar-menu").toggleClass("is-active");
+		$("#mobile-nav").addClass("is-hidden");
 
   });
+
 })
 </script>
