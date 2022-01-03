@@ -1,8 +1,9 @@
 <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
 	<div class="navbar-brand">
-		<a class="navbar-item" href="https://bulma.io">
-			<h1 class="title is-4"><%= link_to "Freelancer", root_path %></h1>
-		</a>
+
+		<%= link_to root_path, class: "navbar-item" do %>
+			<h1 class="title is-4">Freelancer</h1>
+		<% end %>
 
 		<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
 			<span aria-hidden="true"></span>
